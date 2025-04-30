@@ -1,0 +1,123 @@
+Certainly! Here's the professional and extended English version of the prompt, crafted to guide a language model (LLM) like ChatGPT in helping you build a fully functional, modern Islamic website named “Abrar”, with strong focus on front-end design, seamless user experience, and spiritual depth:
+
+Act like a senior UX/UI designer, front-end architect, and digital strategist specialized in Islamic platforms. You have over 15 years of experience designing and developing faith-based digital products that combine modern aesthetics, high usability, and deep authenticity. You understand how to engage Muslim users across cultures by blending spiritual tradition with cutting-edge web technologies.
+
+I want you to help me design and plan the full architecture and front-end concept for a new Islamic website called "Abrar". The website should be modern, visually elegant, mobile-first, and easy to use. It should reflect Islamic values while delivering a smooth, personalized, and interactive experience.
+
+🎯 Objective:
+Build a complete specification for a fully functional Islamic digital platform—"Abrar"—with a clean, modern UI, smart front-end behavior, and content that is rich, verified, and community-driven.
+
+✅ Step-by-Step Instructions:
+Step 1 – Front-End Design & UX Planning
+Propose a modern front-end architecture and UX structure that includes:
+
+Seamless navigation with dynamic mega menus
+
+Clean responsive layout with dark/light mode
+
+Accessibility features (font resizing, high contrast)
+
+Arabic RTL support + global multilingual structure
+
+Smooth UI transitions and real-time interactions
+
+Include visual ideas for:
+
+Landing page
+
+Main content hub (Qur’an, Hadith, Fatwas, Courses)
+
+Personalized user dashboard
+
+Community/Q&A page
+
+Step 2 – Core Features of the Website
+Ensure the design supports these core features:
+
+Personalized dashboards – with user goals, saved content, reminders
+
+Structured learning paths – step-by-step Islamic courses with tracking and certification
+
+Community discussions and Q&A – with moderation and topic-based sorting
+
+AI-powered voice interaction – for content search, playback, navigation
+
+User interaction tools – likes, bookmarks, comments, follow topics
+
+Gamified learning – points, badges, leaderboards for motivation
+
+Offline access – for Qur’an, articles, and audio downloads
+
+Cross-platform support – fully optimized for mobile, tablet, desktop
+
+Content verification system – every post is reviewed and approved by scholars
+
+Step 3 – UI Component Library
+Help me define a reusable UI component library with:
+
+Cards for content blocks
+
+Tabs, modals, dropdowns, form inputs
+
+Toast notifications, loading states, placeholders
+
+Mobile navigation components (bottom nav bar, drawers)
+
+Recommend:
+
+Front-end framework (React.js, Vue.js, or Next.js)
+
+Styling method (TailwindCSS, Chakra UI, CSS Modules)
+
+State management (Redux Toolkit, Zustand, or React Context)
+
+Step 4 – Smart Interactions
+Guide the development of AI-assisted features:
+
+Semantic search with intent detection
+
+Personalized recommendations using behavioral data
+
+Daily Islamic tips and ayah reminders
+
+Voice command support for hands-free navigation
+
+Micro animations to enhance interaction flow
+
+Step 5 – Technology Stack & Integration
+Propose a suitable tech stack including:
+
+Web architecture (SSR/SSG with Next.js or Nuxt.js)
+
+CMS (Sanity.io, Strapi, or headless WordPress)
+
+Backend APIs (REST or GraphQL)
+
+Database options (MongoDB, Firebase, PostgreSQL)
+
+Deployment platform (Vercel, Netlify, or custom VPS)
+
+Step 6 – Visual Identity & Branding
+Help craft a full visual identity for “Abrar”:
+
+Color palette: calming tones like emerald green, gold, soft white, and night black
+
+Logo ideas: merging Islamic symbolism (crescent, calligraphy, geometry) with clean, modern type
+
+Font choices: Arabic-readable fonts (Cairo, Noto Sans Arabic) + matching English font
+
+Icon system: clear, friendly icons (from Heroicons or custom set)
+
+Step 7 – MVP Roadmap & Launch Plan
+Guide me in building a Minimum Viable Product (MVP) with the most impactful features first.
+
+Define key features for MVP
+
+Suggest launch checklist (SEO optimization, sitemap, structured schema)
+
+Recommend multilingual setup with i18n support
+
+Set up user feedback mechanism for post-launch updates
+
+Take a deep breath and work on this task step-by-step.
+
