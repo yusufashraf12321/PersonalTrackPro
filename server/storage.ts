@@ -40,6 +40,102 @@ export interface IStorage {
   getPrayerTimes(date: string, location: string): Promise<PrayerTime | undefined>;
 }
 
+import { db } from "./db";
+import { users, surahs, verses, hadithCollections, hadiths, courses, topics, discussions, prayerTimes } from "@shared/schema";
+import { eq, desc, sql } from "drizzle-orm";
+
+// Database storage implementation
+export class DatabaseStorage implements IStorage {
+  // User methods
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
+  }
+
+  // Quran methods
+  async getAllSurahs(): Promise<Surah[]> {
+    return db.select().from(surahs).orderBy(surahs.number);
+  }
+
+  async getSurahById(id: number): Promise<Surah | undefined> {
+    const [surah] = await db.select().from(surahs).where(eq(surahs.id, id));
+    return surah || undefined;
+  }
+
+  async getVersesBySurahId(surahId: number): Promise<Verse[]> {
+    return db.select().from(verses).where(eq(verses.surahId, surahId)).orderBy(verses.number);
+  }
+
+  // Hadith methods
+  async getAllHadithCollections(): Promise<HadithCollection[]> {
+    return db.select().from(hadithCollections);
+  }
+
+  async getHadithCollectionById(id: number): Promise<HadithCollection | undefined> {
+    const [collection] = await db.select().from(hadithCollections).where(eq(hadithCollections.id, id));
+    return collection || undefined;
+  }
+
+  async getHadithsByCollectionId(collectionId: number): Promise<Hadith[]> {
+    return db.select().from(hadiths).where(eq(hadiths.collectionId, collectionId));
+  }
+
+  // Course methods
+  async getAllCourses(): Promise<Course[]> {
+    return db.select().from(courses);
+  }
+
+  async getCourseById(id: number): Promise<Course | undefined> {
+    const [course] = await db.select().from(courses).where(eq(courses.id, id));
+    return course || undefined;
+  }
+
+  // Community methods
+  async getAllTopics(): Promise<Topic[]> {
+    return db.select().from(topics);
+  }
+
+  async getTopicById(id: number): Promise<Topic | undefined> {
+    const [topic] = await db.select().from(topics).where(eq(topics.id, id));
+    return topic || undefined;
+  }
+
+  async getDiscussionsByTopicId(topicId: number): Promise<Discussion[]> {
+    return db.select()
+      .from(discussions)
+      .where(eq(discussions.topicId, topicId))
+      .orderBy(desc(discussions.createdAt));
+  }
+
+  async getRecentDiscussions(): Promise<Discussion[]> {
+    return db.select()
+      .from(discussions)
+      .orderBy(desc(discussions.createdAt))
+      .limit(10);
+  }
+
+  // Prayer Times methods
+  async getPrayerTimes(date: string, location: string): Promise<PrayerTime | undefined> {
+    const [prayerTime] = await db.select()
+      .from(prayerTimes)
+      .where(sql`${prayerTimes.date} = ${date} AND ${prayerTimes.location} = ${location}`);
+    return prayerTime || undefined;
+  }
+}
+
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
   private surahs: Map<number, Surah>;
@@ -310,7 +406,13 @@ export class MemStorage implements IStorage {
 
   async createUser(userData: InsertUser): Promise<User> {
     const id = this.currentUserId++;
-    const user: User = { ...userData, id, createdAt: new Date() };
+    const user: User = { 
+      ...userData, 
+      id, 
+      createdAt: new Date(),
+      fullName: userData.fullName ?? null,
+      profileImage: userData.profileImage ?? null 
+    };
     this.users.set(id, user);
     return user;
   }
@@ -390,7 +492,11 @@ export class MemStorage implements IStorage {
   
   private addVerse(data: InsertVerse): Verse {
     const id = this.currentVerseId++;
-    const verse: Verse = { ...data, id };
+    const verse: Verse = { 
+      ...data, 
+      id,
+      audioUrl: data.audioUrl ?? null
+    };
     
     const surahVerses = this.verses.get(data.surahId) || [];
     surahVerses.push(verse);
@@ -409,7 +515,12 @@ export class MemStorage implements IStorage {
   
   private addHadith(data: InsertHadith): Hadith {
     const id = this.currentHadithId++;
-    const hadith: Hadith = { ...data, id };
+    const hadith: Hadith = { 
+      ...data, 
+      id,
+      chapter: data.chapter ?? null,
+      grade: data.grade ?? null
+    };
     
     const collectionHadiths = this.hadiths.get(data.collectionId) || [];
     collectionHadiths.push(hadith);
@@ -463,4 +574,8 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Uncomment below to use in-memory storage (for development)
+// export const storage = new MemStorage();
+
+// Use database storage
+export const storage = new DatabaseStorage();
