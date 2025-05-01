@@ -531,7 +531,14 @@ export class MemStorage implements IStorage {
   
   private addCourse(data: InsertCourse): Course {
     const id = this.currentCourseId++;
-    const course: Course = { ...data, id, createdAt: new Date() };
+    const course: Course = { 
+      ...data, 
+      id, 
+      createdAt: new Date(),
+      imageUrl: data.imageUrl ?? null,
+      rating: data.rating ?? null,
+      reviewCount: data.reviewCount ?? null 
+    };
     this.courses.set(id, course);
     return course;
   }
@@ -574,8 +581,8 @@ export class MemStorage implements IStorage {
   }
 }
 
-// Uncomment below to use in-memory storage (for development)
-// export const storage = new MemStorage();
+// Using in-memory storage to disable backend database
+export const storage = new MemStorage();
 
-// Use database storage
-export const storage = new DatabaseStorage();
+// Database storage (currently disabled)
+// export const storage = new DatabaseStorage();
