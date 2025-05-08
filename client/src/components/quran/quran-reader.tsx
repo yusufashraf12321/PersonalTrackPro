@@ -35,6 +35,9 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
   const { t, language } = useLanguage();
   const isRtl = language === "ar";
   const [expandedVerse, setExpandedVerse] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const versesPerPage = 10;
+  const totalPages = Math.ceil((verses?.length || 0) / versesPerPage);
 
   return (
     <Card>
