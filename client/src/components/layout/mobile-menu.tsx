@@ -44,9 +44,11 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
             {t("listen_recitations")}
           </a>
-          <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
-            {t("tafsir")}
-          </a>
+          <Link href="/tafsir">
+            <a className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
+              {t("tafsir")}
+            </a>
+          </Link>
           <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
             {t("memorization_tools")}
           </a>

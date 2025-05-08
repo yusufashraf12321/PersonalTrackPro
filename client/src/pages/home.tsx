@@ -10,32 +10,83 @@ import CourseCard from "@/components/courses/course-card";
 import TopicList from "@/components/community/topic-list";
 import DiscussionList from "@/components/community/discussion-list";
 
+interface Surah {
+  id: number;
+  number: number;
+  name: string;
+  englishName: string;
+  englishNameTranslation: string;
+  revelationType: string;
+  versesCount: number;
+}
+
+interface Verse {
+  id: number;
+  surahId: number;
+  number: number;
+  text: string;
+  translation: string;
+  audioUrl?: string;
+}
+
+interface Course {
+  id: number;
+  title: string;
+  description: string;
+  level: string;
+  duration: string;
+  imageUrl: string;
+  instructorId: number;
+  rating?: number;
+  reviewCount?: number;
+}
+
+interface Topic {
+  id: number;
+  name: string;
+  description: string | null;
+  icon: string | null;
+  postsCount: number;
+}
+
+interface Discussion {
+  id: number;
+  topicId: number;
+  userId: number;
+  title: string;
+  content: string;
+  status: string;
+  commentsCount: number;
+  viewsCount: number;
+  createdAt: string;
+}
+
 export default function Home() {
   const { t, language } = useLanguage();
   const isRtl = language === "ar";
   
-  // Fetch courses
-  const { data: courses, isLoading: isLoadingCourses } = useQuery({
+  // Fetch courses with type
+  const { data: courses, isLoading: isLoadingCourses } = useQuery<Course[]>({
     queryKey: ["/api/courses"],
   });
   
-  // Fetch surahs
-  const { data: surahs, isLoading: isLoadingSurahs } = useQuery({
+  // Fetch surahs with type
+  const { data: surahs, isLoading: isLoadingSurahs } = useQuery<Surah[]>({
     queryKey: ["/api/surahs"],
   });
   
-  // Fetch first surah verses
-  const { data: verses, isLoading: isLoadingVerses } = useQuery({
+  // Fetch verses with type
+  const { data: verses, isLoading: isLoadingVerses } = useQuery<Verse[]>({
     queryKey: ["/api/surahs/1/verses"],
   });
   
-  // Fetch topics
-  const { data: topics, isLoading: isLoadingTopics } = useQuery({
+  // Fetch topics with type
+  const { data: topics, isLoading: isLoadingTopics } = useQuery<Topic[]>({
     queryKey: ["/api/topics"],
   });
   
-  // Fetch discussions
-  const { data: discussions, isLoading: isLoadingDiscussions } = useQuery({
+  // Fetch discussions with type
+  const { data: discussions, isLoading: isLoadingDiscussions } = useQuery<Discussion[]>({
     queryKey: ["/api/discussions"],
   });
 

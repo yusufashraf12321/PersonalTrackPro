@@ -59,9 +59,11 @@ export default function Header() {
                 <DropdownMenuItem className="cursor-pointer">
                   {t("listen_recitations")}
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  {t("tafsir")}
-                </DropdownMenuItem>
+                <Link href="/tafsir">
+                  <DropdownMenuItem className="cursor-pointer">
+                    {t("tafsir")}
+                  </DropdownMenuItem>
+                </Link>
                 <DropdownMenuItem className="cursor-pointer">
                   {t("memorization_tools")}
                 </DropdownMenuItem>

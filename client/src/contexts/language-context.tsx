@@ -56,11 +56,6 @@ const translations: Record<string, Record<string, string>> = {
     ar: "المفضلة",
     fr: "Favoris"
   },
-  settings: {
-    en: "Settings",
-    ar: "الإعدادات",
-    fr: "Paramètres"
-  },
   sign_out: {
     en: "Sign out",
     ar: "تسجيل الخروج",
@@ -659,6 +654,58 @@ const translations: Record<string, Record<string, string>> = {
     en: "View Profile",
     ar: "عرض الملف الشخصي",
     fr: "Voir le profil"
+  },
+
+  // Tafsir page
+  quran_tafsir: {
+    en: "Quran Tafsir",
+    ar: "تفسير القرآن",
+    fr: "Tafsir du Coran"
+  },
+  select_verse_for_tafsir: {
+    en: "Select a verse to view its tafsir",
+    ar: "اختر آية لعرض تفسيرها",
+    fr: "Sélectionnez un verset pour voir son tafsir"
+  },
+  of: {
+    en: "of",
+    ar: "من",
+    fr: "de"
+  },
+  previous: {
+    en: "Previous",
+    ar: "السابق",
+    fr: "Précédent"
+  },
+  next: {
+    en: "Next",
+    ar: "التالي",
+    fr: "Suivant"
+  },
+  play: {
+    en: "Play",
+    ar: "تشغيل",
+    fr: "Jouer"
+  },
+  settings_general: {
+    en: "Settings",
+    ar: "الإعدادات",
+    fr: "Paramètres"
+  },
+  settings_account: {
+    en: "Account Settings",
+    ar: "إعدادات الحساب",
+    fr: "Paramètres du compte"
+  },
+  settings_application: {
+    en: "App Settings",
+    ar: "إعدادات التطبيق",
+    fr: "Paramètres de l'application"
+  },
+  settings_preferences: {
+    en: "Preferences",
+    ar: "التفضيلات",
+    fr: "Préférences"
   }
 };
 
