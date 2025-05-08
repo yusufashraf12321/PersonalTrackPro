@@ -144,30 +144,59 @@ export const insertPrayerTimeSchema = createInsertSchema(prayerTimes).omit({
   id: true,
 });
 
-// Export types
-export type User = typeof users.$inferSelect;
-export type InsertUser = z.infer<typeof insertUserSchema>;
+// Common Types
+export interface Surah {
+  number: number;
+  name: string;
+  englishName: string;
+  versesCount: number;
+}
 
-export type Surah = typeof surahs.$inferSelect;
-export type InsertSurah = z.infer<typeof insertSurahSchema>;
+export interface Verse {
+  surahId: number;
+  number: number;
+  text: string;
+  translation: string;
+}
 
-export type Verse = typeof verses.$inferSelect;
-export type InsertVerse = z.infer<typeof insertVerseSchema>;
+export interface Course {
+  id: number;
+  title: string;
+  description: string;
+  instructor: string;
+  duration: string;
+  level: string;
+  image: string;
+}
 
-export type HadithCollection = typeof hadithCollections.$inferSelect;
-export type InsertHadithCollection = z.infer<typeof insertHadithCollectionSchema>;
+export interface Topic {
+  id: number;
+  name: string;
+  description: string;
+  postsCount: number;
+}
 
-export type Hadith = typeof hadiths.$inferSelect;
-export type InsertHadith = z.infer<typeof insertHadithSchema>;
+export interface Discussion {
+  id: number;
+  topicId: number;
+  userId: number;
+  title: string;
+  content: string;
+  status: string;
+  commentsCount: number;
+  viewsCount: number;
+  createdAt: string;
+}
 
-export type Course = typeof courses.$inferSelect;
-export type InsertCourse = z.infer<typeof insertCourseSchema>;
-
-export type Topic = typeof topics.$inferSelect;
-export type InsertTopic = z.infer<typeof insertTopicSchema>;
-
-export type Discussion = typeof discussions.$inferSelect;
-export type InsertDiscussion = z.infer<typeof insertDiscussionSchema>;
-
-export type PrayerTime = typeof prayerTimes.$inferSelect;
-export type InsertPrayerTime = z.infer<typeof insertPrayerTimeSchema>;
+export interface PrayerTime {
+  date: string;
+  location: string;
+  times: {
+    fajr: string;
+    sunrise: string;
+    dhuhr: string;
+    asr: string;
+    maghrib: string;
+    isha: string;
+  };
+}
