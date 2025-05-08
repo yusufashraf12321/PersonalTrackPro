@@ -1,65 +1,45 @@
 import type { Surah, Verse, Course, Topic, Discussion, PrayerTime } from '../shared/schema';
 
-const QURAN_API_BASE = 'https://api.quran.com/api/v4';
-
+// Local storage implementation
 export const storage = {
   getAllSurahs: async () => {
-    const response = await fetch(`${QURAN_API_BASE}/chapters`);
-    const data = await response.json();
-    return data.chapters.map((chapter: any) => ({
-      number: chapter.id,
-      name: chapter.name_arabic,
-      englishName: chapter.name_simple,
-      englishNameTranslation: chapter.translated_name.name,
-      revelationType: chapter.revelation_place,
-      versesCount: chapter.verses_count
-    }));
+    // Return a sample surah list
+    return [
+      {
+        number: 1,
+        name: "الفاتحة",
+        englishName: "Al-Fatiha",
+        englishNameTranslation: "The Opening",
+        revelationType: "Meccan",
+        versesCount: 7
+      }
+      // Add more surahs as needed
+    ];
   },
 
   getSurahById: async (id: number) => {
-    const response = await fetch(`${QURAN_API_BASE}/chapters/${id}`);
-    const data = await response.json();
-    const chapter = data.chapter;
+    // Return a sample surah
     return {
-      number: chapter.id,
-      name: chapter.name_arabic,
-      englishName: chapter.name_simple,
-      englishNameTranslation: chapter.translated_name.name,
-      revelationType: chapter.revelation_place,
-      versesCount: chapter.verses_count
+      number: 1,
+      name: "الفاتحة",
+      englishName: "Al-Fatiha",
+      englishNameTranslation: "The Opening",
+      revelationType: "Meccan",
+      versesCount: 7
     };
   },
 
   getVersesBySurahId: async (id: number) => {
-    const response = await fetch(`${QURAN_API_BASE}/verses/by_chapter/${id}?language=en&words=true&translations=131&tafsirs=169`);
-    const data = await response.json();
-    return data.verses.map((verse: any) => ({
-      surahId: id,
-      number: verse.verse_number,
-      text: verse.text_uthmani,
-      translation: verse.translations[0].text,
-      tafsir: verse.tafsirs?.[0]?.text,
-      audioUrl: `https://verses.quran.com/${verse.audio?.url}`
-    }));
+    // Return sample verses
+    return [
+      {
+        surahId: 1,
+        number: 1,
+        text: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+        translation: "In the name of Allah, the Entirely Merciful, the Especially Merciful",
+        tafsir: "This is the opening verse of the Quran",
+      }
+      // Add more verses as needed
+    ];
   },
-
-  getAllCourses: async () => {
-    //Implementation for Courses if needed.  Placeholder remains for future implementation.
-    return [];
-  },
-
-  getAllTopics: async () => {
-    //Implementation for Topics if needed. Placeholder remains for future implementation.
-    return [];
-  },
-
-  getRecentDiscussions: async () => {
-    //Implementation for Discussions if needed. Placeholder remains for future implementation.
-    return [];
-  },
-
-  getPrayerTimes: async (date: string, location: string): Promise<PrayerTime> => {
-    //Implementation for Prayer Times if needed. Placeholder remains for future implementation.
-    return {date, location, times: {fajr: "", sunrise: "", dhuhr: "", asr: "", maghrib: "", isha: ""}};
-  }
 };
