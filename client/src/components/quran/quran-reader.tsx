@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -37,7 +38,11 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
   const [expandedVerse, setExpandedVerse] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const versesPerPage = 10;
-  const totalPages = Math.ceil((verses?.length || 0) / versesPerPage);
+  
+  const startIndex = (currentPage - 1) * versesPerPage;
+  const endIndex = startIndex + versesPerPage;
+  const currentVerses = verses.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(verses.length / versesPerPage);
 
   return (
     <Card>
@@ -49,14 +54,6 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
             (language === "ar" ? surah?.name : surah?.englishName) || t("quran")
           )}
         </CardTitle>
-        <div className="flex space-x-2">
-          <Button variant="ghost" size="icon" className="text-white hover:bg-primary-light" title={t("bookmark")}>
-            <Icons.bookmark className="h-5 w-5" />
-          </Button>
-          <Button variant="ghost" size="icon" className="text-white hover:bg-primary-light" title={t("settings")}>
-            <Icons.settings className="h-5 w-5" />
-          </Button>
-        </div>
       </CardHeader>
 
       <CardContent className="p-6">
@@ -86,7 +83,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
               </div>
             ))
           ) : (
-            verses.map((verse) => (
+            currentVerses.map((verse) => (
               <div 
                 key={verse.id} 
                 className="p-4 border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/10 transition duration-150 rounded-lg"
@@ -108,14 +105,6 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
                       ) : (
                         <Icons.chevronDown className="h-4 w-4" />
                       )}
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      className="text-gray-400 hover:text-primary transition duration-150"
-                      title={t("share")}
-                    >
-                      <Icons.share className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>
@@ -152,6 +141,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
             ))
           )}
         </div>
+
         {/* Pagination */}
         {verses.length > 0 && (
           <div className="flex justify-between items-center mt-8">
@@ -165,7 +155,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
             </Button>
             <div className="text-center">
               <span className="text-sm text-gray-600 dark:text-gray-400">
-                {t("verses")} {(currentPage - 1) * versesPerPage + 1}-{Math.min(currentPage * versesPerPage, verses.length)} {t("of")} {verses.length}
+                {t("verses")} {startIndex + 1}-{Math.min(endIndex, verses.length)} {t("of")} {verses.length}
               </span>
             </div>
             <Button 
