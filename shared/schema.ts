@@ -18,6 +18,18 @@ export const insertUserSchema = createInsertSchema(users).omit({
   createdAt: true,
 });
 
+// Quran Schema based on quran.com API
+export const quranEditions = pgTable("quran_editions", {
+  id: serial("id").primaryKey(),
+  identifier: text("identifier").notNull(),
+  language: text("language").notNull(),
+  name: text("name").notNull(),
+  englishName: text("english_name").notNull(),
+  format: text("format").notNull(),
+  type: text("type").notNull(),
+  direction: text("direction").default("rtl").notNull(),
+});
+
 // Surahs (Chapters of Quran)
 export const surahs = pgTable("surahs", {
   id: serial("id").primaryKey(),
@@ -27,10 +39,16 @@ export const surahs = pgTable("surahs", {
   englishNameTranslation: text("english_name_translation").notNull(),
   revelationType: text("revelation_type").notNull(),
   versesCount: integer("verses_count").notNull(),
+  pageStart: integer("page_start").notNull(),
+  pageEnd: integer("page_end").notNull(),
+  bismillahPre: boolean("bismillah_pre").default(true),
 });
 
-export const insertSurahSchema = createInsertSchema(surahs).omit({
-  id: true,
+// Juzs (Parts of Quran)
+export const juzs = pgTable("juzs", {
+  id: serial("id").primaryKey(),
+  number: integer("number").notNull(),
+  verseMapping: text("verse_mapping").notNull(),
 });
 
 // Verses (Ayahs of Quran)
@@ -38,9 +56,28 @@ export const verses = pgTable("verses", {
   id: serial("id").primaryKey(),
   surahId: integer("surah_id").notNull(),
   number: integer("number").notNull(),
+  numberInSurah: integer("number_in_surah").notNull(),
+  juzNumber: integer("juz_number").notNull(),
+  pageNumber: integer("page_number").notNull(),
   text: text("text").notNull(),
+  textImlaei: text("text_imlaei"),
+  textIndopak: text("text_indopak"),
   translation: text("translation").notNull(),
   audioUrl: text("audio_url"),
+  sajdah: boolean("sajdah").default(false),
+  sajdahNumber: integer("sajdah_number"),
+});
+
+// Verse Words
+export const verseWords = pgTable("verse_words", {
+  id: serial("id").primaryKey(),
+  verseId: integer("verse_id").notNull(),
+  position: integer("position").notNull(),
+  text: text("text").notNull(),
+  textImlaei: text("text_imlaei"),
+  textIndopak: text("text_indopak"),
+  translation: text("translation"),
+  transliteration: text("transliteration"),
 });
 
 export const insertVerseSchema = createInsertSchema(verses).omit({
