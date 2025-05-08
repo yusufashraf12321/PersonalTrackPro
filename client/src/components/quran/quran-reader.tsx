@@ -45,11 +45,11 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
   const totalPages = Math.ceil(verses.length / versesPerPage);
 
   return (
-    <Card>
-      <CardHeader className="bg-primary text-white flex justify-between items-center">
+    <Card className="h-full">
+      <CardHeader className="bg-primary/10 flex justify-between items-center">
         <CardTitle>
           {isLoading ? (
-            <Skeleton className="h-6 w-40 bg-white/20" />
+            <Skeleton className="h-6 w-40 bg-primary/20" />
           ) : (
             (language === "ar" ? surah?.name : surah?.englishName) || t("quran")
           )}
@@ -60,7 +60,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
         {/* Bismillah */}
         {!isLoading && surah && surah.number !== 9 && (
           <div className="text-center mb-6">
-            <p className="text-2xl font-arabic leading-loose text-slate-800 dark:text-slate-200">
+            <p className="text-2xl font-arabic leading-loose text-primary">
               بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
             </p>
           </div>
@@ -147,7 +147,6 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
           <div className="flex justify-between items-center mt-8">
             <Button 
               variant="outline" 
-              className="flex items-center" 
               onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
               disabled={currentPage === 1}
             >
@@ -160,7 +159,6 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
             </div>
             <Button 
               variant="outline" 
-              className="flex items-center" 
               onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
             >
