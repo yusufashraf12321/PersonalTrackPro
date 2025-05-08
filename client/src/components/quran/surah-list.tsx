@@ -80,11 +80,24 @@ const SurahList: React.FC<SurahListProps> = ({
             displaySurahs.map((surah) => (
               <div 
                 key={surah.number}
-                className={`p-3 border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-dark-surface/80 transition duration-150 cursor-pointer flex justify-between items-center ${
-                  selectedSurah === surah.number ? "bg-gray-50 dark:bg-dark-surface/80" : ""
+                className={`p-4 border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-dark-surface/80 transition duration-150 cursor-pointer ${
+                  selectedSurah === surah.number ? "bg-primary/5 dark:bg-primary/10" : ""
                 }`}
                 onClick={() => onSelectSurah && onSelectSurah(surah.number)}
               >
+                <div className="flex justify-between items-center mb-1">
+                  <div className="flex items-center">
+                    <span className="w-8 h-8 inline-flex items-center justify-center rounded-full bg-primary/10 text-primary text-sm mr-3">
+                      {surah.number}
+                    </span>
+                    <span className={`text-lg font-medium ${language === "ar" ? "font-arabic" : ""}`}>
+                      {language === "ar" ? surah.name : surah.englishName}
+                    </span>
+                  </div>
+                  <span className="text-sm text-slate-600 dark:text-slate-400">
+                    {surah.versesCount} {t("verses")}
+                  </span>
+                </div>
                 <div className="flex items-center">
                   <span className="w-8 h-8 inline-flex items-center justify-center rounded-full bg-primary/10 text-primary text-sm mr-3">
                     {surah.number}
