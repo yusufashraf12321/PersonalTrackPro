@@ -31,14 +31,13 @@ export const storage = {
   },
 
   getVersesBySurahId: async (id: number) => {
-    const response = await fetch(`${QURAN_API_BASE}/verses/by_chapter/${id}?language=en&words=true&translations=131&tafsirs=169`);
+    const response = await fetch(`${QURAN_API_BASE}/verses/by_chapter/${id}?language=en&words=true&translations=131`);
     const data = await response.json();
     return data.verses.map((verse: any) => ({
       surahId: id,
       number: verse.verse_number,
       text: verse.text_uthmani,
       translation: verse.translations[0].text,
-      tafsir: verse.tafsirs?.[0]?.text,
       audioUrl: `https://verses.quran.com/${verse.audio?.url}`
     }));
   },

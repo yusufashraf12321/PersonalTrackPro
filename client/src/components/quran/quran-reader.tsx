@@ -11,7 +11,6 @@ interface Verse {
   number: number;
   text: string;
   translation: string;
-  tafsir?: string;
   audioUrl?: string;
 }
 
@@ -34,7 +33,32 @@ interface QuranReaderProps {
 const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah }) => {
   const { t, language } = useLanguage();
   const isRtl = language === "ar";
-  const [expandedVerse, setExpandedVerse] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isPlaying, setIsPlaying] = useState<number | null>(null);
+  const versesPerPage = 3;
+  
+  // Calculate pagination
+  const totalPages = verses.length > 0 ? Math.ceil(verses.length / versesPerPage) : 1;
+  const currentVerses = verses.slice((currentPage - 1) * versesPerPage, currentPage * versesPerPage);
+  
+  // Handle audio playback
+  const playAudio = (verse: Verse) => {
+    if (isPlaying === verse.id) {
+      // Stop playing
+      setIsPlaying(null);
+    } else {
+      // Start playing
+      setIsPlaying(verse.id);
+      if (verse.audioUrl) {
+        const audio = new Audio(verse.audioUrl);
+        audio.onended = () => setIsPlaying(null);
+        audio.play().catch(error => {
+          console.error("Error playing audio:", error);
+          setIsPlaying(null);
+        });
+      }
+    }
+  };
 
   return (
     <Card>
@@ -50,25 +74,32 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
           <Button variant="ghost" size="icon" className="text-white hover:bg-primary-light" title={t("bookmark")}>
             <Icons.bookmark className="h-5 w-5" />
           </Button>
+          <Button variant="ghost" size="icon" className="text-white hover:bg-primary-light" title={t("play")}>
+            <Icons.play className="h-5 w-5" />
+          </Button>
           <Button variant="ghost" size="icon" className="text-white hover:bg-primary-light" title={t("settings")}>
             <Icons.settings className="h-5 w-5" />
           </Button>
         </div>
       </CardHeader>
-
+      
       <CardContent className="p-6">
         {/* Bismillah */}
-        {!isLoading && surah && surah.number !== 9 && (
+        {!isLoading && surah && (
           <div className="text-center mb-6">
             <p className="text-2xl font-arabic leading-loose text-slate-800 dark:text-slate-200">
               بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
             </p>
+            <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+              In the name of Allah, the Entirely Merciful, the Especially Merciful.
+            </p>
           </div>
         )}
-
+        
         {/* Verses */}
         <div className="space-y-6">
           {isLoading ? (
+            // Loading skeletons
             Array(3).fill(0).map((_, index) => (
               <div key={index} className="p-4 border-b border-gray-100 dark:border-gray-800 rounded-lg">
                 <div className="flex justify-between items-start mb-2">
@@ -83,10 +114,11 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
               </div>
             ))
           ) : (
-            verses.map((verse) => (
+            // Render verses
+            currentVerses.map((verse) => (
               <div 
                 key={verse.id} 
-                className="p-4 border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/10 transition duration-150 rounded-lg"
+                className="p-4 border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/10 transition duration-150 rounded-lg"
               >
                 <div className="flex justify-between items-start mb-2">
                   <span className="w-8 h-8 flex-shrink-0 inline-flex items-center justify-center rounded-full bg-primary/10 text-primary text-sm">
@@ -96,59 +128,33 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
                     <Button 
                       variant="ghost" 
                       size="icon" 
-                      onClick={() => setExpandedVerse(expandedVerse === verse.number ? null : verse.number)}
-                      className="text-gray-400 hover:text-primary transition duration-150"
-                      title={t(expandedVerse === verse.number ? "collapse" : "expand")}
+                      className={`text-gray-400 hover:text-primary transition duration-150 ${isPlaying === verse.id ? 'text-primary' : ''}`} 
+                      title={t("play")}
+                      onClick={() => playAudio(verse)}
                     >
-                      {expandedVerse === verse.number ? (
-                        <Icons.chevronUp className="h-4 w-4" />
-                      ) : (
-                        <Icons.chevronDown className="h-4 w-4" />
-                      )}
+                      {isPlaying === verse.id ? <Icons.pause className="h-4 w-4" /> : <Icons.play className="h-4 w-4" />}
                     </Button>
                     <Button 
                       variant="ghost" 
                       size="icon" 
-                      className="text-gray-400 hover:text-primary transition duration-150"
+                      className="text-gray-400 hover:text-primary transition duration-150" 
                       title={t("share")}
                     >
                       <Icons.share className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>
-
-                {/* Arabic Text */}
-                <p className="text-xl font-arabic leading-loose text-right text-slate-800 dark:text-slate-200 mt-4">
+                <p className={`text-xl font-arabic leading-loose text-right text-slate-800 dark:text-slate-200 mt-4 ${isRtl ? 'rtl' : ''}`}>
                   {verse.text}
                 </p>
-
-                {/* Translation and Tafsir */}
-                {expandedVerse === verse.number && (
-                  <div className="mt-4 space-y-4 border-t border-gray-100 dark:border-gray-800 pt-4">
-                    <div>
-                      <h4 className="font-medium text-sm text-slate-600 dark:text-slate-400 mb-2">
-                        {t("translation")}
-                      </h4>
-                      <p className="text-slate-800 dark:text-slate-200">
-                        {verse.translation}
-                      </p>
-                    </div>
-                    {verse.tafsir && (
-                      <div>
-                        <h4 className="font-medium text-sm text-slate-600 dark:text-slate-400 mb-2">
-                          {t("tafsir")}
-                        </h4>
-                        <p className="text-slate-800 dark:text-slate-200">
-                          {verse.tafsir}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                )}
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+                  {verse.translation}
+                </p>
               </div>
             ))
           )}
         </div>
+        
         {/* Pagination */}
         {verses.length > 0 && (
           <div className="flex justify-between items-center mt-8">
