@@ -17,10 +17,12 @@ export default function Quran() {
   const { data: verses, isLoading: isLoadingVerses } = useQuery({
     queryKey: ["/api/surahs", selectedSurah, "verses"],
     queryFn: async () => {
+      if (!selectedSurah) return [];
       const res = await fetch(`/api/surahs/${selectedSurah}/verses`);
       if (!res.ok) throw new Error("Failed to fetch verses");
       return res.json();
     },
+    enabled: !!selectedSurah
   });
 
   return (

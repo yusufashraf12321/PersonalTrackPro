@@ -79,11 +79,11 @@ const SurahList: React.FC<SurahListProps> = ({
             // Render surahs
             displaySurahs.map((surah) => (
               <div 
-                key={surah.id}
+                key={surah.number}
                 className={`p-3 border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-dark-surface/80 transition duration-150 cursor-pointer flex justify-between items-center ${
-                  selectedSurah === surah.id ? "bg-gray-50 dark:bg-dark-surface/80" : ""
+                  selectedSurah === surah.number ? "bg-gray-50 dark:bg-dark-surface/80" : ""
                 }`}
-                onClick={() => onSelectSurah && onSelectSurah(surah.id)}
+                onClick={() => onSelectSurah && onSelectSurah(surah.number)}
               >
                 <div className="flex items-center">
                   <span className="w-8 h-8 inline-flex items-center justify-center rounded-full bg-primary/10 text-primary text-sm mr-3">
