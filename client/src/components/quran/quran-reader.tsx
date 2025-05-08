@@ -57,7 +57,6 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
       </CardHeader>
 
       <CardContent className="p-6">
-        {/* Bismillah */}
         {!isLoading && surah && surah.number !== 9 && (
           <div className="text-center mb-6">
             <p className="text-2xl font-arabic leading-loose text-primary">
@@ -66,7 +65,6 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
           </div>
         )}
 
-        {/* Verses */}
         <div className="space-y-6">
           {isLoading ? (
             Array(3).fill(0).map((_, index) => (
@@ -109,12 +107,10 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
                   </div>
                 </div>
 
-                {/* Arabic Text */}
                 <p className="text-xl font-arabic leading-loose text-right text-slate-800 dark:text-slate-200 mt-4">
                   {verse.text}
                 </p>
 
-                {/* Translation and Tafsir */}
                 {expandedVerse === verse.number && (
                   <div className="mt-4 space-y-4 border-t border-gray-100 dark:border-gray-800 pt-4">
                     <div>
@@ -142,7 +138,6 @@ const QuranReader: React.FC<QuranReaderProps> = ({ verses = [], isLoading, surah
           )}
         </div>
 
-        {/* Pagination */}
         {verses.length > 0 && (
           <div className="flex justify-between items-center mt-8">
             <Button 
