@@ -8,7 +8,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   server: {
-    allowedHosts: ['localhost', '127.0.0.1', '.replit.dev']
+    allowedHosts: ['localhost', '127.0.0.1', '.replit.dev', '.riker.replit.dev']
   },
   plugins: [
     react(),
