@@ -4,7 +4,7 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { LanguageToggle } from "@/components/ui/language-toggle";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/language-context";
-import { Search, User } from "lucide-react";
+import { Search, User, Users, Building2, Calendar, DollarSign, FileText, TrendingUp, GraduationCap, Briefcase } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,9 +29,9 @@ export default function Header() {
             <Link href="/">
               <a className="flex items-center">
                 <div className="rounded-full bg-primary w-10 h-10 flex items-center justify-center mr-2">
-                  <Icons.moon className="text-white h-6 w-6" />
+                  <Users className="text-white h-6 w-6" />
                 </div>
-                <span className="text-2xl font-bold font-decorative text-primary">Abrar</span>
+                <span className="text-2xl font-bold font-decorative text-primary">HR System</span>
               </a>
             </Link>
           </div>
@@ -40,75 +40,115 @@ export default function Header() {
           <nav className="hidden md:flex items-center space-x-6">
             <Link href="/">
               <a className="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition duration-150">
-                {t("home")}
+                Dashboard
               </a>
             </Link>
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="link" className="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary p-0">
-                  {t("quran")} <Icons.chevronDown className="ml-1 h-4 w-4" />
+                  <Users className="mr-1 h-4 w-4" />
+                  Employees <Icons.chevronDown className="ml-1 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <Link href="/quran">
+                <Link href="/employees">
                   <DropdownMenuItem className="cursor-pointer">
-                    {t("read_quran")}
+                    <Users className="mr-2 h-4 w-4" />
+                    Employee Directory
                   </DropdownMenuItem>
                 </Link>
-                <DropdownMenuItem className="cursor-pointer">
-                  {t("listen_recitations")}
-                </DropdownMenuItem>
-                <Link href="/tafsir">
+                <Link href="/departments">
                   <DropdownMenuItem className="cursor-pointer">
-                    {t("tafsir")}
+                    <Building2 className="mr-2 h-4 w-4" />
+                    Departments
                   </DropdownMenuItem>
                 </Link>
-                <DropdownMenuItem className="cursor-pointer">
-                  {t("memorization_tools")}
-                </DropdownMenuItem>
+                <Link href="/attendance">
+                  <DropdownMenuItem className="cursor-pointer">
+                    <Calendar className="mr-2 h-4 w-4" />
+                    Attendance
+                  </DropdownMenuItem>
+                </Link>
+                <Link href="/performance-reviews">
+                  <DropdownMenuItem className="cursor-pointer">
+                    <TrendingUp className="mr-2 h-4 w-4" />
+                    Performance Reviews
+                  </DropdownMenuItem>
+                </Link>
               </DropdownMenuContent>
             </DropdownMenu>
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="link" className="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary p-0">
-                  {t("hadith")} <Icons.chevronDown className="ml-1 h-4 w-4" />
+                  <DollarSign className="mr-1 h-4 w-4" />
+                  Payroll <Icons.chevronDown className="ml-1 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <Link href="/hadith">
+                <Link href="/payroll">
                   <DropdownMenuItem className="cursor-pointer">
-                    {t("sahih_bukhari")}
+                    <DollarSign className="mr-2 h-4 w-4" />
+                    Payroll Management
                   </DropdownMenuItem>
                 </Link>
-                <DropdownMenuItem className="cursor-pointer">
-                  {t("sahih_muslim")}
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  {t("40_hadith_nawawi")}
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  {t("all_collections")}
-                </DropdownMenuItem>
+                <Link href="/leave-management">
+                  <DropdownMenuItem className="cursor-pointer">
+                    <FileText className="mr-2 h-4 w-4" />
+                    Leave Management
+                  </DropdownMenuItem>
+                </Link>
               </DropdownMenuContent>
             </DropdownMenu>
             
-            <Link href="/courses">
-              <a className="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition duration-150">
-                {t("courses")}
-              </a>
-            </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="link" className="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary p-0">
+                  <GraduationCap className="mr-1 h-4 w-4" />
+                  Development <Icons.chevronDown className="ml-1 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <Link href="/training">
+                  <DropdownMenuItem className="cursor-pointer">
+                    <GraduationCap className="mr-2 h-4 w-4" />
+                    Training Programs
+                  </DropdownMenuItem>
+                </Link>
+                <Link href="/performance-reviews">
+                  <DropdownMenuItem className="cursor-pointer">
+                    <TrendingUp className="mr-2 h-4 w-4" />
+                    Performance Reviews
+                  </DropdownMenuItem>
+                </Link>
+              </DropdownMenuContent>
+            </DropdownMenu>
             
-            <Link href="/community">
-              <a className="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition duration-150">
-                {t("community")}
-              </a>
-            </Link>
-            
-            <a href="#" className="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition duration-150">
-              {t("about")}
-            </a>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="link" className="text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary p-0">
+                  <Briefcase className="mr-1 h-4 w-4" />
+                  Recruitment <Icons.chevronDown className="ml-1 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <Link href="/recruitment">
+                  <DropdownMenuItem className="cursor-pointer">
+                    <Briefcase className="mr-2 h-4 w-4" />
+                    Job Postings
+                  </DropdownMenuItem>
+                </Link>
+                <DropdownMenuItem className="cursor-pointer">
+                  <Users className="mr-2 h-4 w-4" />
+                  Applications
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">
+                  <Calendar className="mr-2 h-4 w-4" />
+                  Interviews
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
           
           {/* Right side controls */}
@@ -133,7 +173,7 @@ export default function Header() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="flex items-center text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary">
-                  <span className="hidden sm:inline-block mr-1">{t("account")}</span>
+                  <span className="hidden sm:inline-block mr-1">Account</span>
                   <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
                     <User className="h-5 w-5 text-gray-500 dark:text-gray-400" />
                   </div>
@@ -141,20 +181,14 @@ export default function Header() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem className="cursor-pointer">
-                  {t("profile")}
+                  Profile
                 </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer">
-                  {t("my_progress")}
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  {t("bookmarks")}
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  {t("settings")}
+                  Settings
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="cursor-pointer">
-                  {t("sign_out")}
+                  Sign Out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

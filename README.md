@@ -1,129 +1,182 @@
 
-# PersonalTrackPro - منصة تعليمية إسلامية متكاملة 🌟
+# HR System
 
-## نظرة عامة 📖
-منصة تعليمية إسلامية شاملة تهدف إلى توفير تجربة تعلم متكاملة للمسلمين في جميع أنحاء العالم. تجمع المنصة بين دراسة القرآن الكريم، والحديث الشريف، والدورات التعليمية المتخصصة في مكان واحد.
+A comprehensive Human Resources Management System built with modern web technologies. This system provides complete HR functionality including employee management, attendance tracking, payroll processing, leave management, performance reviews, training programs, and recruitment.
 
-## المميزات الرئيسية ✨
+## Features
 
-### 1. القرآن الكريم 📗
-- قراءة القرآن الكريم مع خيارات عرض متعددة
-- التفسير المتكامل لكل آية
-- ترجمات بلغات متعددة
-- دعم التلاوات الصوتية من كبار القراء
-- إمكانية وضع علامات وحفظ الآيات المفضلة
+### 🏢 Employee Management
+- Complete employee directory with detailed profiles
+- Department and position management
+- Employee onboarding and offboarding workflows
+- Employee search and filtering capabilities
 
-### 2. الحديث الشريف 📚
-- مجموعة منتقاة من الأحاديث النبوية الصحيحة
-- تصنيف موضوعي للأحاديث
-- شروحات مفصلة لكل حديث
-- إمكانية البحث المتقدم
+### ⏰ Attendance Tracking
+- Real-time clock in/out functionality
+- Attendance reports and analytics
+- Leave request management
+- Time tracking and overtime calculation
 
-### 3. الدورات التعليمية 🎓
-- دورات في العقيدة والفقه
-- دروس في السيرة النبوية
-- تعليم اللغة العربية للناطقين بغيرها
-- دورات في علوم القرآن والحديث
+### 💰 Payroll Management
+- Automated payroll processing
+- Salary calculations with allowances and deductions
+- Payroll reports and tax management
+- Payment tracking and history
 
-### 4. المجتمع التفاعلي 👥
-- منتدى للنقاشات العلمية
-- إمكانية طرح الأسئلة والاستفسارات
-- مشاركة المعرفة بين المستخدمين
-- مجموعات دراسية تفاعلية
+### 📋 Leave Management
+- Leave request submission and approval workflows
+- Leave balance tracking
+- Multiple leave types (sick, vacation, personal)
+- Leave calendar and scheduling
 
-## التقنيات المستخدمة 💻
+### 📊 Performance Reviews
+- Performance evaluation system
+- Goal setting and tracking
+- Review cycles and scheduling
+- Performance analytics and reporting
 
-### الواجهة الأمامية (Frontend)
-- **إطار العمل**: React مع TypeScript
-- **التصميم**: TailwindCSS + Shadcn/ui
-- **إدارة الحالة**: React Query
-- **التوجيه**: Wouter Router
-- **الرسوم البيانية**: Recharts
-- **المكونات**: Radix UI
+### 🎓 Training & Development
+- Training program management
+- Employee enrollment tracking
+- Course completion certificates
+- Training analytics and ROI tracking
 
-### الخادم (Backend)
-- **إطار العمل**: Express.js
-- **قاعدة البيانات**: PostgreSQL
-- **ORM**: Prisma
-- **التوثيق**: Passport.js
-- **معالجة الطلبات**: Zod للتحقق من صحة البيانات
+### 👥 Recruitment
+- Job posting management
+- Applicant tracking system
+- Interview scheduling
+- Hiring pipeline management
 
-## هيكل المشروع 📁
-```
-project/
-├── client/                  # تطبيق React
-│   ├── src/
-│   │   ├── components/      # مكونات واجهة المستخدم
-│   │   ├── contexts/        # سياقات React
-│   │   ├── hooks/           # Hooks مخصصة
-│   │   ├── lib/            # أدوات مساعدة
-│   │   └── pages/          # صفحات التطبيق
-├── server/                  # خادم Express
-│   ├── routes/             # مسارات API
-│   ├── controllers/        # معالجات الطلبات
-│   └── models/            # نماذج قاعدة البيانات
-└── shared/                 # مكونات مشتركة
-```
+### 📈 Analytics & Reporting
+- Comprehensive HR analytics dashboard
+- Employee statistics and trends
+- Department performance metrics
+- Custom report generation
 
-## المتطلبات الأساسية 📋
-- Node.js (v18 أو أحدث)
-- PostgreSQL (v14 أو أحدث)
-- npm أو yarn
+## Technology Stack
 
-## خطوات التثبيت 🚀
+- **Frontend**: React 18, TypeScript, Tailwind CSS
+- **Backend**: Node.js, Express.js
+- **Database**: PostgreSQL with Drizzle ORM
+- **UI Components**: Radix UI, Lucide React Icons
+- **Charts**: Recharts
+- **Routing**: Wouter
+- **Build Tool**: Vite
 
-1. استنساخ المشروع:
+## Getting Started
+
+### Prerequisites
+- Node.js 18+ 
+- PostgreSQL database
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
 ```bash
-git clone https://github.com/username/PersonalTrackPro.git
-cd PersonalTrackPro
+git clone <repository-url>
+cd hr-system
 ```
 
-2. تثبيت التبعيات:
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-3. إعداد متغيرات البيئة:
+3. Set up environment variables:
 ```bash
 cp .env.example .env
-# قم بتعديل المتغيرات حسب إعداداتك
+# Edit .env with your database credentials
 ```
 
-4. تهيئة قاعدة البيانات:
+4. Set up the database:
 ```bash
 npm run db:push
 ```
 
-5. تشغيل التطبيق:
+5. Start the development server:
 ```bash
 npm run dev
 ```
 
-## المساهمة في المشروع 🤝
+The application will be available at `http://localhost:3000`
 
-نرحب بمساهمات المجتمع! لتقديم مساهمتك:
+## Project Structure
 
-1. قم بعمل Fork للمشروع
-2. أنشئ فرع جديد للميزة (`git checkout -b feature/amazing-feature`)
-3. قم بإجراء تغييراتك
-4. أضف التغييرات (`git add .`)
-5. قم بعمل Commit (`git commit -m 'إضافة ميزة رائعة'`)
-6. ارفع التغييرات (`git push origin feature/amazing-feature`)
-7. افتح Pull Request
+```
+├── client/                 # Frontend React application
+│   ├── src/
+│   │   ├── components/    # Reusable UI components
+│   │   ├── pages/        # Page components
+│   │   ├── contexts/     # React contexts
+│   │   ├── hooks/        # Custom React hooks
+│   │   └── lib/          # Utility functions
+├── server/                # Backend Express application
+│   ├── routes.ts         # API route definitions
+│   ├── storage.ts        # Database operations
+│   └── db.ts            # Database connection
+├── shared/               # Shared types and schemas
+│   └── schema.ts        # Database schema definitions
+└── prisma/              # Database migrations
+```
 
-## معايير الكود 📝
-- استخدام TypeScript لجميع الملفات
-- اتباع معايير ESLint المحددة
-- كتابة اختبارات للوظائف الجديدة
-- توثيق الكود بشكل واضح
+## API Endpoints
 
-## الترخيص 📄
-هذا المشروع مرخص تحت [MIT License](LICENSE)
+### Employee Management
+- `GET /api/employees` - Get all employees
+- `POST /api/employees` - Create new employee
+- `PUT /api/employees/:id` - Update employee
+- `DELETE /api/employees/:id` - Delete employee
 
-## الدعم والتواصل 📞
-- فتح Issue في GitHub للإبلاغ عن المشكلات
-- الانضمام إلى مجتمعنا على Discord
-- متابعتنا على Twitter للحصول على آخر التحديثات
+### Attendance
+- `GET /api/employees/:id/attendance` - Get employee attendance
+- `POST /api/attendance` - Create attendance record
+- `PUT /api/attendance/:id` - Update attendance record
 
-## شكر خاص 💐
-شكر خاص لجميع المساهمين والداعمين الذين ساعدوا في تطوير هذا المشروع.
+### Payroll
+- `GET /api/employees/:id/payroll` - Get employee payroll
+- `POST /api/payroll` - Create payroll record
+- `PUT /api/payroll/:id` - Update payroll record
+
+### Leave Management
+- `GET /api/leave-types` - Get leave types
+- `GET /api/employees/:id/leave-requests` - Get employee leave requests
+- `POST /api/leave-requests` - Create leave request
+- `PUT /api/leave-requests/:id` - Update leave request
+
+### Performance Reviews
+- `GET /api/employees/:id/performance-reviews` - Get employee reviews
+- `POST /api/performance-reviews` - Create performance review
+
+### Training
+- `GET /api/training-programs` - Get training programs
+- `GET /api/employees/:id/training` - Get employee training
+
+### Recruitment
+- `GET /api/job-postings` - Get job postings
+- `POST /api/job-postings` - Create job posting
+- `GET /api/job-postings/:id/applications` - Get job applications
+- `POST /api/job-applications` - Create job application
+
+### Departments
+- `GET /api/departments` - Get all departments
+- `POST /api/departments` - Create department
+
+### Dashboard
+- `GET /api/dashboard/stats` - Get dashboard statistics
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+For support, email support@hrsystem.com or create an issue in the repository.
