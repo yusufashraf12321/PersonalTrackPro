@@ -1,14 +1,15 @@
-import { pgTable, text, serial, integer, boolean, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, uniqueIndex, decimal, date } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// Users
+// Users (HR Staff)
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
   email: text("email").notNull(),
   fullName: text("full_name"),
+  role: text("role").notNull().default("hr_staff"), // hr_staff, hr_manager, admin
   profileImage: text("profile_image"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
@@ -18,222 +19,312 @@ export const insertUserSchema = createInsertSchema(users).omit({
   createdAt: true,
 });
 
-// Quran Schema based on quran.com API
-export const quranEditions = pgTable("quran_editions", {
-  id: serial("id").primaryKey(),
-  identifier: text("identifier").notNull(),
-  language: text("language").notNull(),
-  name: text("name").notNull(),
-  englishName: text("english_name").notNull(),
-  format: text("format").notNull(),
-  type: text("type").notNull(),
-  direction: text("direction").default("rtl").notNull(),
-});
-
-// Surahs (Chapters of Quran)
-export const surahs = pgTable("surahs", {
-  id: serial("id").primaryKey(),
-  number: integer("number").notNull(),
-  name: text("name").notNull(),
-  englishName: text("english_name").notNull(),
-  englishNameTranslation: text("english_name_translation").notNull(),
-  revelationType: text("revelation_type").notNull(),
-  versesCount: integer("verses_count").notNull(),
-  pageStart: integer("page_start").notNull(),
-  pageEnd: integer("page_end").notNull(),
-  bismillahPre: boolean("bismillah_pre").default(true),
-});
-
-// Juzs (Parts of Quran)
-export const juzs = pgTable("juzs", {
-  id: serial("id").primaryKey(),
-  number: integer("number").notNull(),
-  verseMapping: text("verse_mapping").notNull(),
-});
-
-// Verses (Ayahs of Quran)
-export const verses = pgTable("verses", {
-  id: serial("id").primaryKey(),
-  surahId: integer("surah_id").notNull(),
-  number: integer("number").notNull(),
-  numberInSurah: integer("number_in_surah").notNull(),
-  juzNumber: integer("juz_number").notNull(),
-  pageNumber: integer("page_number").notNull(),
-  text: text("text").notNull(),
-  textImlaei: text("text_imlaei"),
-  textIndopak: text("text_indopak"),
-  translation: text("translation").notNull(),
-  audioUrl: text("audio_url"),
-  sajdah: boolean("sajdah").default(false),
-  sajdahNumber: integer("sajdah_number"),
-});
-
-// Verse Words
-export const verseWords = pgTable("verse_words", {
-  id: serial("id").primaryKey(),
-  verseId: integer("verse_id").notNull(),
-  position: integer("position").notNull(),
-  text: text("text").notNull(),
-  textImlaei: text("text_imlaei"),
-  textIndopak: text("text_indopak"),
-  translation: text("translation"),
-  transliteration: text("transliteration"),
-});
-
-export const insertVerseSchema = createInsertSchema(verses).omit({
-  id: true,
-});
-
-// Hadith Collections
-export const hadithCollections = pgTable("hadith_collections", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  englishName: text("english_name").notNull(),
-  description: text("description").notNull(),
-  totalHadiths: integer("total_hadiths").notNull(),
-});
-
-export const insertHadithCollectionSchema = createInsertSchema(hadithCollections).omit({
-  id: true,
-});
-
-// Hadiths
-export const hadiths = pgTable("hadiths", {
-  id: serial("id").primaryKey(),
-  collectionId: integer("collection_id").notNull(),
-  number: integer("number").notNull(),
-  text: text("text").notNull(),
-  translation: text("translation").notNull(),
-  chapter: text("chapter"),
-  grade: text("grade"),
-});
-
-export const insertHadithSchema = createInsertSchema(hadiths).omit({
-  id: true,
-});
-
-// Courses
-export const courses = pgTable("courses", {
-  id: serial("id").primaryKey(),
-  title: text("title").notNull(),
-  description: text("description").notNull(),
-  level: text("level").notNull(), // beginner, intermediate, advanced
-  duration: text("duration").notNull(), // e.g., "8 weeks"
-  imageUrl: text("image_url"),
-  instructorId: integer("instructor_id").notNull(),
-  rating: integer("rating"),
-  reviewCount: integer("review_count"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
-export const insertCourseSchema = createInsertSchema(courses).omit({
-  id: true,
-  createdAt: true,
-});
-
-// Community Topics
-export const topics = pgTable("topics", {
+// Departments
+export const departments = pgTable("departments", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   description: text("description"),
-  icon: text("icon"),
-  postsCount: integer("posts_count").default(0).notNull(),
-});
-
-export const insertTopicSchema = createInsertSchema(topics).omit({
-  id: true,
-  postsCount: true,
-});
-
-// Community Discussions/Questions
-export const discussions = pgTable("discussions", {
-  id: serial("id").primaryKey(),
-  topicId: integer("topic_id").notNull(),
-  userId: integer("user_id").notNull(),
-  title: text("title").notNull(),
-  content: text("content").notNull(),
-  status: text("status").notNull(), // answered, discussion, knowledge
-  commentsCount: integer("comments_count").default(0).notNull(),
-  viewsCount: integer("views_count").default(0).notNull(),
+  managerId: integer("manager_id"),
+  budget: decimal("budget", { precision: 10, scale: 2 }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const insertDiscussionSchema = createInsertSchema(discussions).omit({
+export const insertDepartmentSchema = createInsertSchema(departments).omit({
   id: true,
-  commentsCount: true,
-  viewsCount: true,
   createdAt: true,
 });
 
-// Prayer Times
-export const prayerTimes = pgTable("prayer_times", {
+// Positions/Job Titles
+export const positions = pgTable("positions", {
   id: serial("id").primaryKey(),
-  date: text("date").notNull(),
-  location: text("location").notNull(),
-  fajr: text("fajr").notNull(),
-  dhuhr: text("dhuhr").notNull(),
-  asr: text("asr").notNull(),
-  maghrib: text("maghrib").notNull(),
-  isha: text("isha").notNull(),
+  title: text("title").notNull(),
+  description: text("description"),
+  departmentId: integer("department_id").notNull(),
+  salaryRange: text("salary_range"),
+  requirements: text("requirements"),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const insertPrayerTimeSchema = createInsertSchema(prayerTimes).omit({
+export const insertPositionSchema = createInsertSchema(positions).omit({
   id: true,
+  createdAt: true,
+});
+
+// Employees
+export const employees = pgTable("employees", {
+  id: serial("id").primaryKey(),
+  employeeId: text("employee_id").notNull().unique(), // Employee number
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  email: text("email").notNull().unique(),
+  phone: text("phone"),
+  address: text("address"),
+  dateOfBirth: date("date_of_birth"),
+  gender: text("gender"),
+  maritalStatus: text("marital_status"),
+  emergencyContact: text("emergency_contact"),
+  emergencyPhone: text("emergency_phone"),
+  positionId: integer("position_id").notNull(),
+  departmentId: integer("department_id").notNull(),
+  managerId: integer("manager_id"),
+  hireDate: date("hire_date").notNull(),
+  terminationDate: date("termination_date"),
+  salary: decimal("salary", { precision: 10, scale: 2 }).notNull(),
+  status: text("status").notNull().default("active"), // active, terminated, on_leave
+  profileImage: text("profile_image"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const insertEmployeeSchema = createInsertSchema(employees).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+// Attendance
+export const attendance = pgTable("attendance", {
+  id: serial("id").primaryKey(),
+  employeeId: integer("employee_id").notNull(),
+  date: date("date").notNull(),
+  clockIn: timestamp("clock_in"),
+  clockOut: timestamp("clock_out"),
+  totalHours: decimal("total_hours", { precision: 4, scale: 2 }),
+  status: text("status").notNull().default("present"), // present, absent, late, half_day
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertAttendanceSchema = createInsertSchema(attendance).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Leave Types
+export const leaveTypes = pgTable("leave_types", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description"),
+  defaultDays: integer("default_days").notNull(),
+  isPaid: boolean("is_paid").default(true),
+  color: text("color"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertLeaveTypeSchema = createInsertSchema(leaveTypes).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Leave Requests
+export const leaveRequests = pgTable("leave_requests", {
+  id: serial("id").primaryKey(),
+  employeeId: integer("employee_id").notNull(),
+  leaveTypeId: integer("leave_type_id").notNull(),
+  startDate: date("start_date").notNull(),
+  endDate: date("end_date").notNull(),
+  daysRequested: integer("days_requested").notNull(),
+  reason: text("reason"),
+  status: text("status").notNull().default("pending"), // pending, approved, rejected
+  approvedBy: integer("approved_by"),
+  approvedAt: timestamp("approved_at"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertLeaveRequestSchema = createInsertSchema(leaveRequests).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Payroll
+export const payroll = pgTable("payroll", {
+  id: serial("id").primaryKey(),
+  employeeId: integer("employee_id").notNull(),
+  month: integer("month").notNull(),
+  year: integer("year").notNull(),
+  basicSalary: decimal("basic_salary", { precision: 10, scale: 2 }).notNull(),
+  allowances: decimal("allowances", { precision: 10, scale: 2 }).default("0"),
+  deductions: decimal("deductions", { precision: 10, scale: 2 }).default("0"),
+  netSalary: decimal("net_salary", { precision: 10, scale: 2 }).notNull(),
+  status: text("status").notNull().default("pending"), // pending, processed, paid
+  paymentDate: date("payment_date"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertPayrollSchema = createInsertSchema(payroll).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Performance Reviews
+export const performanceReviews = pgTable("performance_reviews", {
+  id: serial("id").primaryKey(),
+  employeeId: integer("employee_id").notNull(),
+  reviewerId: integer("reviewer_id").notNull(),
+  reviewPeriod: text("review_period").notNull(), // e.g., "Q1 2024"
+  reviewDate: date("review_date").notNull(),
+  rating: integer("rating"), // 1-5 scale
+  strengths: text("strengths"),
+  areasForImprovement: text("areas_for_improvement"),
+  goals: text("goals"),
+  comments: text("comments"),
+  status: text("status").notNull().default("draft"), // draft, submitted, completed
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertPerformanceReviewSchema = createInsertSchema(performanceReviews).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Training Programs
+export const trainingPrograms = pgTable("training_programs", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description"),
+  duration: text("duration"),
+  cost: decimal("cost", { precision: 10, scale: 2 }),
+  isMandatory: boolean("is_mandatory").default(false),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertTrainingProgramSchema = createInsertSchema(trainingPrograms).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Employee Training
+export const employeeTraining = pgTable("employee_training", {
+  id: serial("id").primaryKey(),
+  employeeId: integer("employee_id").notNull(),
+  trainingProgramId: integer("training_program_id").notNull(),
+  enrollmentDate: date("enrollment_date").notNull(),
+  completionDate: date("completion_date"),
+  status: text("status").notNull().default("enrolled"), // enrolled, in_progress, completed, dropped
+  score: integer("score"),
+  certificate: text("certificate"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertEmployeeTrainingSchema = createInsertSchema(employeeTraining).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Recruitment/Job Postings
+export const jobPostings = pgTable("job_postings", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  requirements: text("requirements"),
+  departmentId: integer("department_id").notNull(),
+  positionId: integer("position_id").notNull(),
+  salaryRange: text("salary_range"),
+  location: text("location"),
+  type: text("type").notNull(), // full_time, part_time, contract, internship
+  status: text("status").notNull().default("open"), // open, closed, draft
+  postedDate: date("posted_date").notNull(),
+  closingDate: date("closing_date"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertJobPostingSchema = createInsertSchema(jobPostings).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Job Applications
+export const jobApplications = pgTable("job_applications", {
+  id: serial("id").primaryKey(),
+  jobPostingId: integer("job_posting_id").notNull(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone"),
+  resume: text("resume"),
+  coverLetter: text("cover_letter"),
+  status: text("status").notNull().default("applied"), // applied, reviewing, shortlisted, interviewed, offered, rejected
+  appliedDate: timestamp("applied_date").defaultNow().notNull(),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertJobApplicationSchema = createInsertSchema(jobApplications).omit({
+  id: true,
+  appliedDate: true,
+  createdAt: true,
 });
 
 // Common Types
-export interface Surah {
-  number: number;
-  name: string;
-  englishName: string;
-  versesCount: number;
-}
-
-export interface Verse {
-  surahId: number;
-  number: number;
-  text: string;
-  translation: string;
-}
-
-export interface Course {
+export interface Employee {
   id: number;
-  title: string;
-  description: string;
-  instructor: string;
-  duration: string;
-  level: string;
-  image: string;
-}
-
-export interface Topic {
-  id: number;
-  name: string;
-  description: string;
-  postsCount: number;
-}
-
-export interface Discussion {
-  id: number;
-  topicId: number;
-  userId: number;
-  title: string;
-  content: string;
+  employeeId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  position: string;
+  department: string;
+  hireDate: string;
   status: string;
-  commentsCount: number;
-  viewsCount: number;
-  createdAt: string;
 }
 
-export interface PrayerTime {
+export interface Department {
+  id: number;
+  name: string;
+  description: string;
+  managerName: string;
+  employeeCount: number;
+}
+
+export interface Attendance {
+  id: number;
+  employeeId: number;
   date: string;
+  clockIn: string;
+  clockOut: string;
+  totalHours: number;
+  status: string;
+}
+
+export interface LeaveRequest {
+  id: number;
+  employeeId: number;
+  leaveType: string;
+  startDate: string;
+  endDate: string;
+  daysRequested: number;
+  status: string;
+}
+
+export interface Payroll {
+  id: number;
+  employeeId: number;
+  month: number;
+  year: number;
+  basicSalary: number;
+  netSalary: number;
+  status: string;
+}
+
+export interface PerformanceReview {
+  id: number;
+  employeeId: number;
+  reviewerId: number;
+  reviewPeriod: string;
+  rating: number;
+  status: string;
+}
+
+export interface JobPosting {
+  id: number;
+  title: string;
+  department: string;
   location: string;
-  times: {
-    fajr: string;
-    sunrise: string;
-    dhuhr: string;
-    asr: string;
-    maghrib: string;
-    isha: string;
-  };
+  type: string;
+  status: string;
+  postedDate: string;
 }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { useLanguage } from "@/contexts/language-context";
 import { Icons } from "../icons";
+import { Users, Building2, Calendar, DollarSign, FileText, TrendingUp, GraduationCap, Briefcase } from "lucide-react";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -23,77 +24,127 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       <div className="px-2 pt-2 pb-3 space-y-1">
         <Link href="/">
           <a className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
-            {t("home")}
+            Dashboard
           </a>
         </Link>
         
         <button
           className="flex justify-between w-full px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-          onClick={() => toggleSubmenu("quran-submenu")}
+          onClick={() => toggleSubmenu("employees-submenu")}
         >
-          {t("quran")}
+          <div className="flex items-center">
+            <Users className="mr-2 h-4 w-4" />
+            Employees
+          </div>
           <Icons.chevronDown className="h-4 w-4" />
         </button>
         
-        <div className={`${openSubmenu === "quran-submenu" ? "block" : "hidden"} pl-4`}>
-          <Link href="/quran">
+        <div className={`${openSubmenu === "employees-submenu" ? "block" : "hidden"} pl-4`}>
+          <Link href="/employees">
             <a className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
-              {t("read_quran")}
+              <Users className="mr-2 h-4 w-4 inline" />
+              Employee Directory
             </a>
           </Link>
-          <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
-            {t("listen_recitations")}
-          </a>
-          <Link href="/tafsir">
+          <Link href="/departments">
             <a className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
-              {t("tafsir")}
+              <Building2 className="mr-2 h-4 w-4 inline" />
+              Departments
             </a>
           </Link>
-          <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
-            {t("memorization_tools")}
-          </a>
+          <Link href="/attendance">
+            <a className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
+              <Calendar className="mr-2 h-4 w-4 inline" />
+              Attendance
+            </a>
+          </Link>
+          <Link href="/performance-reviews">
+            <a className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
+              <TrendingUp className="mr-2 h-4 w-4 inline" />
+              Performance Reviews
+            </a>
+          </Link>
         </div>
         
         <button
           className="flex justify-between w-full px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-          onClick={() => toggleSubmenu("hadith-submenu")}
+          onClick={() => toggleSubmenu("payroll-submenu")}
         >
-          {t("hadith")}
+          <div className="flex items-center">
+            <DollarSign className="mr-2 h-4 w-4" />
+            Payroll
+          </div>
           <Icons.chevronDown className="h-4 w-4" />
         </button>
         
-        <div className={`${openSubmenu === "hadith-submenu" ? "block" : "hidden"} pl-4`}>
-          <Link href="/hadith">
+        <div className={`${openSubmenu === "payroll-submenu" ? "block" : "hidden"} pl-4`}>
+          <Link href="/payroll">
             <a className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
-              {t("sahih_bukhari")}
+              <DollarSign className="mr-2 h-4 w-4 inline" />
+              Payroll Management
+            </a>
+          </Link>
+          <Link href="/leave-management">
+            <a className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
+              <FileText className="mr-2 h-4 w-4 inline" />
+              Leave Management
+            </a>
+          </Link>
+        </div>
+        
+        <button
+          className="flex justify-between w-full px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+          onClick={() => toggleSubmenu("development-submenu")}
+        >
+          <div className="flex items-center">
+            <GraduationCap className="mr-2 h-4 w-4" />
+            Development
+          </div>
+          <Icons.chevronDown className="h-4 w-4" />
+        </button>
+        
+        <div className={`${openSubmenu === "development-submenu" ? "block" : "hidden"} pl-4`}>
+          <Link href="/training">
+            <a className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
+              <GraduationCap className="mr-2 h-4 w-4 inline" />
+              Training Programs
+            </a>
+          </Link>
+          <Link href="/performance-reviews">
+            <a className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
+              <TrendingUp className="mr-2 h-4 w-4 inline" />
+              Performance Reviews
+            </a>
+          </Link>
+        </div>
+        
+        <button
+          className="flex justify-between w-full px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+          onClick={() => toggleSubmenu("recruitment-submenu")}
+        >
+          <div className="flex items-center">
+            <Briefcase className="mr-2 h-4 w-4" />
+            Recruitment
+          </div>
+          <Icons.chevronDown className="h-4 w-4" />
+        </button>
+        
+        <div className={`${openSubmenu === "recruitment-submenu" ? "block" : "hidden"} pl-4`}>
+          <Link href="/recruitment">
+            <a className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
+              <Briefcase className="mr-2 h-4 w-4 inline" />
+              Job Postings
             </a>
           </Link>
           <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
-            {t("sahih_muslim")}
+            <Users className="mr-2 h-4 w-4 inline" />
+            Applications
           </a>
           <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
-            {t("40_hadith_nawawi")}
-          </a>
-          <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
-            {t("all_collections")}
+            <Calendar className="mr-2 h-4 w-4 inline" />
+            Interviews
           </a>
         </div>
-        
-        <Link href="/courses">
-          <a className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
-            {t("courses")}
-          </a>
-        </Link>
-        
-        <Link href="/community">
-          <a className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
-            {t("community")}
-          </a>
-        </Link>
-        
-        <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
-          {t("about")}
-        </a>
       </div>
     </div>
   );
